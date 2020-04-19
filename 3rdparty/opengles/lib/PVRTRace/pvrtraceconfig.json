@@ -1,0 +1,47 @@
+{
+	"*": {
+		"Enabled": false,
+		"Tracing": {
+			"OutputFilename": "../../../../%pname.pvrtrace",
+			"RecordData": true,
+			"StartFrame": 0,
+			"AppendTraceVersion": true,
+			"EndFrame": 500,
+			"ExitOnLastFrame": false,
+			"ClientBufferRecordFrequency": 1,
+			"SaveFrameBuffer": true,
+			"UseCompression": false
+		},
+		"Profiling": {
+			"Enabled": false,
+			"FunctionTimelineLevel": 1,
+			"RenderstateOverride": false,
+			"SoftwareCounters": true,
+			"Overrides": {
+				"CullingMode": 0,
+				"DisableStencilTest": false,
+				"DisableAlphaTest": false,
+				"ForceFlatColourFrag": false,
+				"DisableDrawCalls": false,
+				"DisableDepthTest": false,
+				"DisableBlending": false,
+				"Force2x2Textures": false,
+				"DisableTextureModifications": false,
+				"DisableScissorTest": false,
+				"DisableFBAccess": false,
+				"ForceViewport": false,
+				"DisableFlushNFinish": false,
+				"DisableTextureFiltering": false
+			},
+			"SwapInterval": 0
+		},
+		"Debug": {
+			"Level": 1
+		},
+
+		"Host": {
+			"EglLibraryPath": "../libEGL.dll",
+			"Es2LibraryPath": "../libGLESv2.dll"
+		}
+	}
+}
