@@ -33,16 +33,21 @@ workspace "gui-sdk"
 filter {"system:windows"}
 	platforms { "x64" }
 	defines { "TARGET_OS_WINDOWS", "WIN32_LEAN_AND_MEAN" }
+	entrypoint "mainCRTStartup"
 filter {"system:linux"}
 	platforms { "x64", "arm32", "arm64" }
-	defines { "TARGET_OS_LINUX" }	
+	defines { "TARGET_OS_LINUX" }
 --------------------------------------------------	
 filter {"platforms:x64"}
 	architecture "x86_64"
+	
 filter {"platforms:arm32"}
 	architecture "ARM"
+	--gccprefix "armv7a-linux-gnueabihf-"
+	
 filter {"platforms:arm64"}
 	architecture "ARM64"
+	--gccprefix "aarch64-linux-gnueabi-"
 --------------------------------------------------
 dofile("3rdparty/glfw/premake5.lua")
 dofile("3rdparty/imgui/premake5.lua")

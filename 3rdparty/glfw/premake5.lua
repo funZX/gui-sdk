@@ -42,8 +42,8 @@ project "glfw"
 	filter { "system:linux" }
 		defines { "_GLFW_X11" }
 		files {
-			"src/null_joystick.h",
-			"src/null_joystick.c",
+			"src/linux_joystick.h",
+			"src/linux_joystick.c",
 			"src/x11_platform.h",
 			"src/xkb_unicode.h",
 			"src/posix_time.h",

@@ -68,7 +68,7 @@ void Gui::Keyboard::Draw(Window& window, bool* p_open)
 
         if (leftKey)
         {
-            if (ImGui::Button(leftKey, { 1.8 * btnSize, btnSize })) {
+            if (ImGui::Button(leftKey, { 1.8f * btnSize, btnSize })) {
                 
                 EvType ev[] = {
                     EvType::None,

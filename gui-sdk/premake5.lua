@@ -1,6 +1,6 @@
 --------------------------------------------------
 project "gui-sdk"
-    kind "ConsoleApp"
+    kind "WindowedApp"
     language "C++"
 
 	targetdir "../build/bin/%{cfg.system}/%{cfg.architecture}/%{cfg.buildcfg}"
@@ -21,6 +21,6 @@ project "gui-sdk"
 		links { "libEGL", "libGLESv2"}
 	
 	filter {"system:linux"}
-		links { "X11", "EGL", "GLESv2" }
+		links { "pthread", "rt", "dl", "X11", "EGL", "GLESv2" }
 
 --------------------------------------------------
