@@ -1,4 +1,5 @@
 #include <imgui.h>
+#include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
 #include "gui_app.h"
@@ -13,10 +14,12 @@ int main(int argc, char* argv[])
 {
     glfwInit();
 
-    glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_EGL_CONTEXT_API);
     glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+#if TARGET_OS_LINUX_ARM
+    glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_EGL_CONTEXT_API);
+#endif
 
     glfwWindowHint(GLFW_RED_BITS, 8);
     glfwWindowHint(GLFW_GREEN_BITS, 8);
@@ -34,6 +37,8 @@ int main(int argc, char* argv[])
     glfwWindow = glfwCreateWindow(screen.Width(), screen.Height(), "gui-sdk", NULL, NULL);
     glfwMakeContextCurrent(glfwWindow);
     glfwSwapInterval(1);
+
+    gladLoadGL(glfwGetProcAddress);
 
     Gui::App* app = new Gui::App;
 

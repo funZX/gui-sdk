@@ -10,6 +10,7 @@ project "glfw"
 	filter { "system:*" }
 		files {
 			"include/**.h",
+			"src/glad/**.c",
 			"src/internal.h",
 			"src/mappings.h",
 			"src/context.c",

@@ -1,4 +1,4 @@
-#include <GLES2/gl2.h>
+#include <glad/gl.h>
 #include "gui_app.h"
 #include "gui_wrap.h"
 #include "virtual_console.h"

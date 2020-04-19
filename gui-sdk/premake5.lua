@@ -18,9 +18,14 @@ project "gui-sdk"
 	links { "glfw", "imgui" }
 
 	filter {"system:windows"}
-		links { "libEGL", "libGLESv2"}
-	
+		defines { "TARGET_OS_WINDOWS" }
+
 	filter {"system:linux"}
-		links { "pthread", "rt", "dl", "X11", "EGL", "GLESv2" }
+		defines { "TARGET_OS_LINUX" }
+		links { "pthread", "rt", "dl", "X11" }
+
+	filter {"platforms:arm*"}
+		defines { "TARGET_OS_LINUX_ARM" }
+		links { "EGL", "GLESv2" }
 
 --------------------------------------------------
