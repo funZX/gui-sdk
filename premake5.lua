@@ -8,7 +8,7 @@ if action == "clean" then
 	os.exit(1)
 end
 --------------------------------------------------
-if action == "gmake" or action == "ninja" then
+if action == "gmake" then
 	if nil == options["cc"] then
 		print("Choose a C/C++ compiler set.")
 		os.exit(1)
@@ -34,9 +34,14 @@ filter {"system:windows"}
 	platforms { "x64" }
 	defines { "TARGET_OS_WINDOWS", "WIN32_LEAN_AND_MEAN" }
 	entrypoint "mainCRTStartup"
+
 filter {"system:linux"}
 	platforms { "x64", "arm32", "arm64" }
 	defines { "TARGET_OS_LINUX" }
+
+filter {"platforms:arm*"}	
+	defines { "TARGET_OS_LINUX_ARM" }
+
 --------------------------------------------------	
 filter {"platforms:x64"}
 	architecture "x86_64"

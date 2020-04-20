@@ -13,11 +13,11 @@ Gui::Console::Console()
         switch (ev)
         {
         case Keyboard::KeyEnter:
-            AddOutput(inputBuf);
+            AddLine(inputBuf);
             Exec(&inputBuf[2]);
             break;
         case Keyboard::KeyClear:
-            OutputClear();
+            Clear();
             break;
         }
         shouldScroll = true;
@@ -29,19 +29,23 @@ Gui::Console::Console()
 // ----------------------------------------------------------------------//
 Gui::Console::~Console()
 {
+    Clear();
     delete keyboard;
 }
 // ----------------------------------------------------------------------//
-void Gui::Console::AddOutput(const char* line)
+void Gui::Console::AddLine(const char* line)
 {
     if (line[0])
-        outputLines.push_back(line);
+        buffer.push_back(strdup(line));
 }
 // ----------------------------------------------------------------------//
 
-void Gui::Console::OutputClear()
+void Gui::Console::Clear()
 {
-    outputLines.clear();
+    for (auto line: buffer)
+        free(line);
+        
+    buffer.clear();
 }
 
 // ----------------------------------------------------------------------//
@@ -50,9 +54,9 @@ void Gui::Console::Draw(Window& window, bool* p_open)
     ImGui::BeginChild("Output", {0, -window.vSpace}, false, ImGuiWindowFlags_HorizontalScrollbar);
 
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1));
-    for (int i = 0; i < outputLines.Size; i++)
+    for (int i = 0; i < buffer.Size; i++)
     {
-        const char* item = outputLines[i].c_str();
+        const char* item = buffer[i];
         ImGui::TextUnformatted(item);
     }
     ImGui::PopStyleVar();

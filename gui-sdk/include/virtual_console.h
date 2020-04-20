@@ -18,13 +18,13 @@ struct Console : public Rect
     void                Draw(Window& window, bool* p_open = 0);
 
 protected:
-    void                AddOutput(const char* line);
-    void                OutputClear();
+    void                AddLine(const char* line);
+    void                Clear();
 
 protected:
     void Exec(const char* cmd);
 
-    ImVector<std::string>     outputLines;
+    ImVector<char*>     buffer;
     bool                shouldScroll;
 
     Keyboard*           keyboard;

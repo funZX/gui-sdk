@@ -1,0 +1,11 @@
+{
+    "workbench.editor.enablePreview": false,
+
+    "files.exclude" : {
+        "**/.git*" : true,
+        "**/build" : true,
+        "**/LICENSE*": true,
+        "**/README*": true,
+        "**/premake*": true
+    }
+}
