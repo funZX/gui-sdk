@@ -1,5 +1,5 @@
 --------------------------------------------------
-project "gui-sdk"
+project "application"
     kind "WindowedApp"
     language "C++"
 
@@ -11,10 +11,11 @@ project "gui-sdk"
 		"include",
 		"../3rdparty/glfw/include",
 		"../3rdparty/imgui/include",
+		"../3rdparty/ofx/include",
 	}
 
     files { "**.h", "**.cpp" }
-	links { "glfw", "imgui" }
+	links { "glfw", "imgui", "ofx" }
 
 	filter {"system:linux"}
 		links { "pthread", "rt", "dl", "X11" }
