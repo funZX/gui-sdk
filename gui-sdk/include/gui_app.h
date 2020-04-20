@@ -17,7 +17,7 @@ namespace Gui
         struct Context
         {
             void Create();
-            void Draw(const Rect& screen);
+            void Show(const Rect& screen);
             void Destroy();
 
             struct {

@@ -11,31 +11,29 @@ namespace Gui
 struct Keyboard : public Rect
 {
     enum EvType {
-        None, KeyTab, KeyShift, KeyClear, KeyBackspace, KeyEnter, KeySpace
+        None, KeyTab, KeyChar, KeyShift, KeyClear, KeyBackspace, KeyEnter, KeySpace
     };
 
-    typedef std::function<void(char*, EvType)> OnKeyFn;
+    typedef std::function<void(EvType, int key)> OnKeyFn;
 
-    Keyboard(OnKeyFn fn);
+    Keyboard();
     ~Keyboard() {}
 
-    void Draw(Window& window, bool* p_open = 0);
+    bool                Open(Window& window, OnKeyFn fn = OnKeyFn());
 
 protected:
-
+    bool                Draw(Window& window, OnKeyFn fn);
 
     void                InputPush(const char c);
     void                InputPop();
     void                InputClear();
 
-    bool                InputKey(EvType ev);
+    void                InputKey(EvType ev, int key);
 protected:
     bool                keyShift;
 
     char                inputBuf[512];
     int                 inputBufSize;
-
-    OnKeyFn             funcKey;
 };
 }
 #endif 

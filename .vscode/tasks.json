@@ -5,7 +5,7 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "${workspaceFolder}/build/prj/make",
+            "command": "pushd ${workspaceFolder}/build/prj; make; popd",
             "args":[],
             "problemMatcher": []
         },

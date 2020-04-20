@@ -3,9 +3,8 @@
 #include "virtual_keyboard.h"
 
 // ----------------------------------------------------------------------//
-Gui::Keyboard::Keyboard(OnKeyFn fn)
+Gui::Keyboard::Keyboard()
     : Rect()
-,     funcKey(fn)
 { 
     InputClear();
     keyShift = false;
@@ -21,8 +20,26 @@ void Gui::Keyboard::InputPop()
     if (inputBufSize > 2) // # SPACE
         inputBuf[--inputBufSize] = 0;
 }
+
+bool Gui::Keyboard::Open(Window& window, OnKeyFn fn)
+{
+    if (ImGui::IsItemClicked())
+        ImGui::OpenPopup("##Keyboard");
+    
+    ImGui::SameLine();
+
+    if (ImGui::BeginPopup("##Keyboard"))
+    {
+        bool ret = Draw(window, fn);
+        ImGui::EndPopup();
+        return ret;
+    }
+
+    return false;
+}
+
 // ----------------------------------------------------------------------//
-void Gui::Keyboard::Draw(Window& window, bool* p_open)
+bool Gui::Keyboard::Draw(Window& window, OnKeyFn fn)
 {
     ImGui::PushItemWidth(Width() - 2 * window.hSpace);
     if (ImGui::InputText("##CmdLine",
@@ -77,7 +94,8 @@ void Gui::Keyboard::Draw(Window& window, bool* p_open)
                     EvType::KeyClear
                 };
 
-                result = ev[k];
+                fn(result = ev[k], 0);
+                InputKey(result, 0);
 
                 if (result == EvType::KeyShift)
                     keyShift = !keyShift;
@@ -92,7 +110,11 @@ void Gui::Keyboard::Draw(Window& window, bool* p_open)
             btnName[1] = 0;
 
             if (ImGui::Button(btnName, { btnSize, btnSize }))
-                result = static_cast<EvType>(btnName[0]);
+            {
+                int key = btnName[0];
+                fn(result = EvType::KeyChar, key);
+                InputKey(result, key);
+            }
 
             ImGui::SameLine();
         }
@@ -109,12 +131,13 @@ void Gui::Keyboard::Draw(Window& window, bool* p_open)
                     EvType::KeySpace
                 };
 
-                result = ev[k];
+                fn(result = ev[k], 0);
+                InputKey(result, 0);
             }
         }
     }
     
-    InputKey(result);
+    return result == EvType::KeyEnter;
 }
 // ----------------------------------------------------------------------//
 void Gui::Keyboard::InputClear()
@@ -125,7 +148,7 @@ void Gui::Keyboard::InputClear()
     inputBufSize = 2;
 }
 // ----------------------------------------------------------------------//
-bool Gui::Keyboard::InputKey(EvType ev)
+void Gui::Keyboard::InputKey(EvType ev, int key)
 {
     switch (ev)
     {
@@ -136,23 +159,19 @@ bool Gui::Keyboard::InputKey(EvType ev)
         InputPop();
         break;
     case EvType::KeyClear:
-        funcKey(inputBuf, ev);
         InputClear();
         break;
     case EvType::KeyEnter:
-        funcKey(inputBuf, ev);
         InputClear();
         break;
     case EvType::KeySpace:
         InputPush(' ');
         break;
+    case EvType::KeyChar:
+        InputPush(key);
     case EvType::None:
     case EvType::KeyShift:
         break;
-    default:
-        InputPush(static_cast<const char>(ev));
     }
-
-    return ev == EvType::KeyEnter;
 }
 // ----------------------------------------------------------------------//

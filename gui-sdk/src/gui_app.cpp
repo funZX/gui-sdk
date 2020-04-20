@@ -1,7 +1,7 @@
 #include <glad/gl.h>
 #include "gui_app.h"
 #include "gui_wrap.h"
-#include "virtual_console.h"
+#include "virtual_keyboard.h"
 
 //--------------------------------------------------------------
 void Gui::App::Context::Create()
@@ -44,7 +44,7 @@ void Gui::App::Context::Destroy()
     glDeleteProgram(effect.program);
 }
 
-void Gui::App::Context::Draw(const Rect& screen)
+void Gui::App::Context::Show(const Rect& screen)
 {
     ImDrawData* draw_data = ImGui::GetDrawData();
 
@@ -304,25 +304,20 @@ void Gui::App::Draw(const Rect& rect)
     w.MoveTo(rect.Position());
     w.Resize(rect.Size());
 
-    Gui::BeginWindow(w, "Console", ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+    Gui::BeginWindow(w, "Click me to open the keyboard!", ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
 
-    static Gui::Console console;
-    console.Draw(w);
+    static Gui::Keyboard keyboard;
+    if (keyboard.Open(w, [&](Keyboard::EvType ev, int key) {
+
+        }))
+    {
+
+    }
 
     Gui::EndWindow(w);
 
-    float h = w.Height();
-    w.MoveTo(0, h);
-    w.Inflate(0, rect.Height() - h);
-
-    Gui::BeginWindow(w, "MainWindow", ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
-
-    static float k = 0;
-    if (ImGui::SliderFloat("W", &k, 0, 100));
-    Gui::EndWindow(w);
 
     ImGui::Render();
-
-    context.Draw(rect);
+    context.Show(rect);
 }
 //--------------------------------------------------------------

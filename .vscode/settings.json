@@ -6,6 +6,12 @@
         "**/build" : true,
         "**/LICENSE*": true,
         "**/README*": true,
-        "**/premake*": true
+        "**/premake*": true,
+        "**/imgui.ini": true
+    },
+    "files.associations": {
+        "array": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp"
     }
 }
