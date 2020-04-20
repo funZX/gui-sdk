@@ -33,13 +33,13 @@ public:
 	virtual void	setWindowPosition(int x, int y) {}
 	virtual void	setWindowShape(int w, int h) {}
 
-	virtual ImVec2	getWindowPosition() {return ImVec2(); }
-	virtual ImVec2	getWindowSize(){return ImVec2(); }
-	virtual ImVec2	getScreenSize(){return ImVec2(); }
+	virtual ImVec2	getWindowPosition() const {return ImVec2(); }
+	virtual ImVec2	getWindowSize() const {return ImVec2(); }
+	virtual ImVec2	getScreenSize() const {return ImVec2(); }
 
 	//this is used by ofGetWidth and now determines the window width based on orientation
-	virtual int		getWidth(){ return 0; }
-	virtual int		getHeight(){ return 0; }
+	virtual int		getWidth()  const { return 0; }
+	virtual int		getHeight()  const { return 0; }
 
 	virtual void	setWindowTitle(std::string title){}
 

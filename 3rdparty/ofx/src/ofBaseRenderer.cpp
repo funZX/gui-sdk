@@ -82,8 +82,16 @@ void ofBaseRenderer::finishRender() {
 }
 
 void ofBaseRenderer::setup() {
+    ImVec2 windowSize = window->getWindowSize();
+
+    ofResizeEventArgs evArgs;
+    evArgs.width = windowSize.x;
+    evArgs.height = windowSize.y;
 
     gui = std::make_shared<ofGui>(this);
+    gui->setup();
+    gui->onWindowResized(evArgs);
+
 
     memset(&effect, 0, sizeof(effect));
     memset(&vbo, 0, sizeof(vbo));
@@ -106,8 +114,6 @@ void ofBaseRenderer::setup() {
 
     createProgram();
     createBuffers();
-
-    gui->setup();
 }
 
 void ofBaseRenderer::reset() {

@@ -18,7 +18,7 @@ public:
     virtual void setup();
     /// \brief Deinitialize this renderer state
     virtual void reset();
-
+    
     unsigned    createTexture(int w, int h, unsigned char* pixels);
     void        deleteTexture(unsigned texID);
 

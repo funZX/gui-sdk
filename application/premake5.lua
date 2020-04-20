@@ -15,7 +15,7 @@ project "application"
 	}
 
     files { "**.h", "**.cpp" }
-	links { "glfw", "imgui", "ofx" }
+	links { "ofx", "glfw", "imgui" }
 
 	filter {"system:linux"}
 		links { "pthread", "rt", "dl", "X11" }

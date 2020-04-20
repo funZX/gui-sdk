@@ -1,3 +1,5 @@
+#include <math.h>
+
 #include "ofUtils.h"
 #include "ofColor.h"
 #include "ofConstants.h"

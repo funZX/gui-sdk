@@ -38,6 +38,7 @@ filter {"system:windows"}
 filter {"system:linux"}
 	platforms { "x64", "arm32", "arm64" }
 	defines { "TARGET_OS_LINUX" }
+	buildoptions {"-fpermissive"}
 
 filter {"platforms:arm*"}	
 	defines { "TARGET_OS_LINUX_ARM" }
