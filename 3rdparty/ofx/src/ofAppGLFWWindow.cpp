@@ -722,6 +722,8 @@ void ofAppGLFWWindow::resize_cb(GLFWwindow* windowP_, int w, int h) {
 	int windowW, windowH; // <- screen coordinates, which may be scaled
 	glfwGetWindowSize(windowP_, &windowW, &windowH);
 
+	glViewport(0, 0, windowW, windowH);
+
 	// Find scale factor needed to transform from screen coordinates
 	// to physical pixel coordinates
 	instance->pixelScreenCoordScale = (float)framebufferW / (float)windowW;
@@ -739,7 +741,7 @@ void ofAppGLFWWindow::resize_cb(GLFWwindow* windowP_, int w, int h) {
 
 //------------------------------------------------------------
 void ofAppGLFWWindow::framebuffer_size_cb(GLFWwindow* windowP_, int w, int h){
-	resize_cb(windowP_, w, h);
+
 }
 
 //--------------------------------------------

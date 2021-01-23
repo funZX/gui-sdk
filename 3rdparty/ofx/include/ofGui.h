@@ -5,7 +5,7 @@
 
 class ofGui {
 public:
-    ofGui(ofBaseRenderer* glRenderer);
+    ofGui(ofBaseRenderer* renderer);
     virtual ~ofGui();
 
     virtual void update();

@@ -13,6 +13,8 @@ ofBaseRenderer::~ofBaseRenderer() {
 }
 
 void ofBaseRenderer::startRender() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	gui->update();
 }
 
@@ -36,7 +38,7 @@ void ofBaseRenderer::finishRender() {
         { 2.0f / (R - L),       0.0f,                0.0f,   0.0f },
         { 0.0f,                 2.0f / (T - B),      0.0f,   0.0f },
         { 0.0f,                 0.0f,               -1.0f,   0.0f },
-        { (R + L) / (L - R),    (T + B) / (B - T),   0.0f,   1.0f },
+        { -(R + L) / (R - L),    -(T + B) / (T - B),   0.0f,   1.0f },
     };
 
     glUseProgram(effect.program);
@@ -84,14 +86,8 @@ void ofBaseRenderer::finishRender() {
 void ofBaseRenderer::setup() {
     ImVec2 windowSize = window->getWindowSize();
 
-    ofResizeEventArgs evArgs;
-    evArgs.width = windowSize.x;
-    evArgs.height = windowSize.y;
-
     gui = std::make_shared<ofGui>(this);
     gui->setup();
-    gui->onWindowResized(evArgs);
-
 
     memset(&effect, 0, sizeof(effect));
     memset(&vbo, 0, sizeof(vbo));

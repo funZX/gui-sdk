@@ -7,7 +7,7 @@
 using namespace std;
 
 //--------------------------------------------------------------
-ofGui::ofGui(ofBaseRenderer* glRenderer) : glRenderer(glRenderer) {
+ofGui::ofGui(ofBaseRenderer* renderer) : glRenderer(renderer) {
 
 }
 //--------------------------------------------------------------
