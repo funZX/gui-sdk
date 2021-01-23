@@ -66,8 +66,8 @@ public:
 	void hideCursor();
 	void showCursor();
 
-	int getHeight();
-	int getWidth();
+	int getHeight() const;
+	int getWidth() const;
 
 	ofCoreEvents & events();
 	std::shared_ptr<ofBaseRenderer> & renderer();

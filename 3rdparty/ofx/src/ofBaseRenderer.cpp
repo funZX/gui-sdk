@@ -13,7 +13,14 @@ ofBaseRenderer::~ofBaseRenderer() {
 }
 
 void ofBaseRenderer::startRender() {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    int W = window->getWidth();
+    int H = window->getHeight();
+
+    glViewport(0, 0, W, H);
+	glScissor(0, 0, W, H);
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	gui->update();
 }
