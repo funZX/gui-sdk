@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/bin/linux/x86_64/Debug/gui-sdk",
+            "program": "${workspaceFolder}/build/bin/linux/x86_64/Debug/application",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

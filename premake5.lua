@@ -38,6 +38,7 @@ filter {"system:windows"}
 filter {"system:linux"}
 	platforms { "x64", "arm32", "arm64" }
 	defines { "TARGET_OS_LINUX" }
+	buildoptions {"-fpermissive"}
 
 filter {"platforms:arm*"}	
 	defines { "TARGET_OS_LINUX_ARM" }
@@ -56,5 +57,6 @@ filter {"platforms:arm64"}
 --------------------------------------------------
 dofile("3rdparty/glfw/premake5.lua")
 dofile("3rdparty/imgui/premake5.lua")
-dofile("gui-sdk/premake5.lua")
+dofile("3rdparty/ofx/premake5.lua")
+dofile("application/premake5.lua")
 --------------------------------------------------
