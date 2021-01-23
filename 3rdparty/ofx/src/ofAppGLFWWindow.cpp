@@ -723,6 +723,8 @@ void ofAppGLFWWindow::resize_cb(GLFWwindow* windowP_, int w, int h) {
 	glfwGetWindowSize(windowP_, &windowW, &windowH);
 
 	glViewport(0, 0, windowW, windowH);
+	glScissor(0, 0, windowW, windowH);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Find scale factor needed to transform from screen coordinates
 	// to physical pixel coordinates
