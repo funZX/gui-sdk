@@ -48,11 +48,11 @@ filter {"platforms:x64"}
 	architecture "x86_64"
 	
 filter {"platforms:arm32"}
-	architecture "ARM"
+	architecture "arm"
 	--gccprefix "armv7a-linux-gnueabihf-"
 	
 filter {"platforms:arm64"}
-	architecture "ARM64"
+	architecture "aarch64"
 	--gccprefix "aarch64-linux-gnueabi-"
 --------------------------------------------------
 dofile("3rdparty/glfw/premake5.lua")
