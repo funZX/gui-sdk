@@ -6,12 +6,12 @@ project "application"
 	targetdir "../build/bin/%{cfg.system}/%{cfg.architecture}/%{cfg.buildcfg}"
 	objdir "../build/obj/%{cfg.system}/%{cfg.prjname}"
 	
-	libdirs { "../3rdparty/opengles/lib" }	
+	libdirs { "../libs/opengles/lib" }	
 	includedirs {
 		"include",
-		"../3rdparty/glfw/include",
-		"../3rdparty/imgui/include",
-		"../3rdparty/ofx/include",
+		"../libs/glfw/include",
+		"../libs/imgui/include",
+		"../libs/ofx/include",
 	}
 
     files { "**.h", "**.cpp" }
@@ -23,4 +23,9 @@ project "application"
 	filter {"platforms:arm*"}
 		links { "EGL", "GLESv2" }
 
+	group "libs"
+		include "../libs/glfw"
+		include "../libs/imgui"
+		include "../libs/ofx"
+	group "" -- end of "Dependensies"
 --------------------------------------------------

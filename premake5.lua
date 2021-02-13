@@ -16,7 +16,7 @@ if action == "gmake" then
 end
 --------------------------------------------------
 workspace "gui-sdk"
-	location "build/prj"
+	location( "build/project/" .. _ACTION )
 	characterset "MBCS"
 	staticruntime "On"
 	omitframepointer "On"
@@ -55,8 +55,6 @@ filter {"platforms:arm64"}
 	architecture "aarch64"
 	--gccprefix "aarch64-linux-gnueabi-"
 --------------------------------------------------
-dofile("3rdparty/glfw/premake5.lua")
-dofile("3rdparty/imgui/premake5.lua")
-dofile("3rdparty/ofx/premake5.lua")
-dofile("application/premake5.lua")
+
+include("main/premake5.lua")
 --------------------------------------------------
