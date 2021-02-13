@@ -23,9 +23,5 @@ project "application"
 	filter {"platforms:arm*"}
 		links { "EGL", "GLESv2" }
 
-	group "libs"
-		include "../libs/glfw"
-		include "../libs/imgui"
-		include "../libs/ofx"
-	group "" -- end of "Dependensies"
+	dependson {"glfw", "imgui", "ofx"}
 --------------------------------------------------

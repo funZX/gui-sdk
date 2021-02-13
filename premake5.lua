@@ -56,5 +56,12 @@ filter {"platforms:arm64"}
 	--gccprefix "aarch64-linux-gnueabi-"
 --------------------------------------------------
 
+group "libs"
+	include "libs/glfw"
+	include "libs/imgui"
+	include "libs/ofx"
+group ""
+
 include("main/premake5.lua")
+
 --------------------------------------------------
