@@ -23,7 +23,7 @@ void ofGui::update()
 
     for (int i = 0; i < 5; i++) {
         io.MouseDown[i] = mousePressed[i];
-        mousePressed[i] = !mouseReleased;
+        mousePressed[i] = !mouseReleased[i];
     }
 
     ImGui::NewFrame();
@@ -82,6 +82,7 @@ void ofGui::setup()
     ofAddListener(ofEvents().keyReleased, this, &ofGui::onKeyReleased);
 
     ofAddListener(ofEvents().keyPressed,       this, &ofGui::onKeyPressed);
+    ofAddListener(ofEvents().mouseMoved,       this, &ofGui::onMouseMoved);
     ofAddListener(ofEvents().mouseDragged,     this, &ofGui::onMouseDragged);
     ofAddListener(ofEvents().mousePressed,     this, &ofGui::onMousePressed);
     ofAddListener(ofEvents().mouseReleased,    this, &ofGui::onMouseReleased);
@@ -129,14 +130,14 @@ void ofGui::onMousePressed(ofMouseEventArgs& event) {
     setMousePos(event.x, event.y);
     if (event.button >= 0 && event.button < 5) {
         mousePressed[event.button] = true;
-        mouseReleased = false;
+        mouseReleased[event.button] = false;
     }
 }
 
 //--------------------------------------------------------------
 void ofGui::onMouseReleased(ofMouseEventArgs& event) {
     setMousePos(event.x, event.y);
-    mouseReleased = true;
+    mouseReleased[event.button] = true;
 }
 
 //--------------------------------------------------------------
@@ -145,9 +146,14 @@ void ofGui::mouseMoved(ofMouseEventArgs& event) {
 }
 
 //--------------------------------------------------------------
+void ofGui::onMouseMoved(ofMouseEventArgs& event) {
+    setMousePos(event.x, event.y);
+}
+
+//--------------------------------------------------------------
 void ofGui::onMouseDragged(ofMouseEventArgs& event) {
     setMousePos(event.x, event.y);
-    mouseReleased = false;
+    mouseReleased[event.button] = false;
 }
 
 //--------------------------------------------------------------
@@ -160,18 +166,18 @@ void ofGui::onMouseScrolled(ofMouseEventArgs& event) {
 void ofGui::touchDown(ofTouchEventArgs& touch) {
     setMousePos(touch.x, touch.y);
     mousePressed[0] = true;
-    mouseReleased = false;
+    mouseReleased[0] = false;
 }
 
 //--------------------------------------------------------------
 void ofGui::touchUp(ofTouchEventArgs& touch) {
-    mouseReleased = true;
+    mouseReleased[0] = true;
 }
 
 //--------------------------------------------------------------
 void ofGui::touchMoved(ofTouchEventArgs& touch) {
     setMousePos(touch.x, touch.y);
-    mouseReleased = false;
+    mouseReleased[0] = false;
 }
 //--------------------------------------------------------------
 void ofGui::onKeyReleased(ofKeyEventArgs& event)

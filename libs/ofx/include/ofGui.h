@@ -13,6 +13,7 @@ public:
     virtual void setup();
     virtual void reset();
 
+    virtual void onMouseMoved(ofMouseEventArgs& event);
     virtual void onMouseDragged(ofMouseEventArgs& event);
     virtual void onMousePressed(ofMouseEventArgs& event);
     virtual void onMouseReleased(ofMouseEventArgs& event);
@@ -34,8 +35,8 @@ public:
 protected:
     void setStyle();
 
-    bool mousePressed[5] = { false };
-    bool mouseReleased = true;
+    bool mousePressed[5]  = { false, false, false, false, false };
+    bool mouseReleased[5] = { true, true, true, true, true };
     ImVec2 mouseCursorPos = ImVec2(0, 0);
 
     ImFontAtlas* imAtlas;
