@@ -1,71 +1,66 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
-
+void ofApp::setup(ofEventArgs& args){
 }
-
 //--------------------------------------------------------------
-void ofApp::update(){
-
+void ofApp::update(ofEventArgs& args) {
 }
-
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::draw(ofEventArgs & args) {
     ImGui::ShowDemoWindow();
 }
-
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
+void ofApp::exit(ofEventArgs& args) {
 }
-
 //--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
+void ofApp::windowResized(ofResizeEventArgs& resize) {
 }
-
+void ofApp::fileDragged(ofDragInfo& drag) {
+}
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y){
-
+void ofApp::keyPressed(ofKeyEventArgs& key) {
 }
-
 //--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
+void ofApp::keyReleased(ofKeyEventArgs& key) {
 }
-
 //--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
+void ofApp::mouseMoved(ofMouseEventArgs& mouse) {
 }
-
 //--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
+void ofApp::mouseDragged(ofMouseEventArgs& mouse) {
 }
-
 //--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
+void ofApp::mousePressed(ofMouseEventArgs& mouse) {
 }
-
 //--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
+void ofApp::mouseReleased(ofMouseEventArgs& mouse) {
 }
-
 //--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
+void ofApp::mouseScrolled(ofMouseEventArgs& mouse) {
 }
-
 //--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
+void ofApp::mouseEntered(ofMouseEventArgs& mouse) {
 }
-
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
+void ofApp::mouseExited(ofMouseEventArgs& mouse) {
 }
+//--------------------------------------------------------------
+void ofApp::messageReceived(ofMessage& message) {
+}
+//--------------------------------------------------------------
+void ofApp::touchDown(ofTouchEventArgs& touch) {
+}
+//--------------------------------------------------------------
+void ofApp::touchMoved(ofTouchEventArgs& touch) {
+}
+//--------------------------------------------------------------
+void ofApp::touchUp(ofTouchEventArgs& touch) {
+}
+//--------------------------------------------------------------
+void ofApp::touchDoubleTap(ofTouchEventArgs& touch) {
+}
+//--------------------------------------------------------------
+void ofApp::touchCancelled(ofTouchEventArgs& touch) {
+}
+//--------------------------------------------------------------

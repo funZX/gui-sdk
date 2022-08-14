@@ -52,7 +52,7 @@ void ofMainLoop::run(shared_ptr<ofAppBaseWindow> window, shared_ptr<ofBaseApp> &
 		ofAddListener(window->events().mouseExited,app.get(),&ofBaseApp::mouseExited,OF_EVENT_ORDER_APP);
 		ofAddListener(window->events().windowResized,app.get(),&ofBaseApp::windowResized,OF_EVENT_ORDER_APP);
 		ofAddListener(window->events().messageEvent,app.get(),&ofBaseApp::messageReceived,OF_EVENT_ORDER_APP);
-		ofAddListener(window->events().fileDragEvent,app.get(),&ofBaseApp::dragged,OF_EVENT_ORDER_APP);
+		ofAddListener(window->events().fileDragEvent,app.get(),&ofBaseApp::fileDragged,OF_EVENT_ORDER_APP);
 		ofAddListener(window->events().touchCancelled,app.get(),&ofBaseApp::touchCancelled,OF_EVENT_ORDER_APP);
 		ofAddListener(window->events().touchDoubleTap,app.get(),&ofBaseApp::touchDoubleTap,OF_EVENT_ORDER_APP);
 		ofAddListener(window->events().touchDown,app.get(),&ofBaseApp::touchDown,OF_EVENT_ORDER_APP);
@@ -140,7 +140,7 @@ void ofMainLoop::exit(){
 		ofRemoveListener(window->events().mouseExited,app.get(),&ofBaseApp::mouseExited,OF_EVENT_ORDER_APP);
 		ofRemoveListener(window->events().windowResized,app.get(),&ofBaseApp::windowResized,OF_EVENT_ORDER_APP);
 		ofRemoveListener(window->events().messageEvent,app.get(),&ofBaseApp::messageReceived,OF_EVENT_ORDER_APP);
-		ofRemoveListener(window->events().fileDragEvent,app.get(),&ofBaseApp::dragged,OF_EVENT_ORDER_APP);
+		ofRemoveListener(window->events().fileDragEvent,app.get(),&ofBaseApp::fileDragged,OF_EVENT_ORDER_APP);
 		ofRemoveListener(window->events().touchCancelled,app.get(),&ofBaseApp::touchCancelled,OF_EVENT_ORDER_APP);
 		ofRemoveListener(window->events().touchDoubleTap,app.get(),&ofBaseApp::touchDoubleTap,OF_EVENT_ORDER_APP);
 		ofRemoveListener(window->events().touchDown,app.get(),&ofBaseApp::touchDown,OF_EVENT_ORDER_APP);

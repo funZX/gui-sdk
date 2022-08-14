@@ -4,19 +4,29 @@
 
 class ofApp : public ofBaseApp{
 	public:
-		void setup();
-		void update();
-		void draw();
-		
-		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y);
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
+        void    setup(ofEventArgs& args);
+        void    update(ofEventArgs& args);
+        void    draw(ofEventArgs& args);
+        void    exit(ofEventArgs& args);
+
+        void    windowResized(ofResizeEventArgs& resize);
+        void    fileDragged(ofDragInfo& drag);
+
+        void    keyPressed(ofKeyEventArgs& key);
+        void    keyReleased(ofKeyEventArgs& key);
+
+        void    mouseMoved(ofMouseEventArgs& mouse);
+        void    mouseDragged(ofMouseEventArgs& mouse);
+        void    mousePressed(ofMouseEventArgs& mouse);
+        void    mouseReleased(ofMouseEventArgs& mouse);
+        void    mouseScrolled(ofMouseEventArgs& mouse);
+        void    mouseEntered(ofMouseEventArgs& mouse);
+        void    mouseExited(ofMouseEventArgs& mouse);
+        void    messageReceived(ofMessage& message);
+
+        void    touchDown(ofTouchEventArgs& touch);
+        void    touchMoved(ofTouchEventArgs& touch);
+        void    touchUp(ofTouchEventArgs& touch);
+        void    touchDoubleTap(ofTouchEventArgs& touch);
+        void    touchCancelled(ofTouchEventArgs& touch);
 };
