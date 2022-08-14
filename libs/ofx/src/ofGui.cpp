@@ -75,9 +75,16 @@ void ofGui::setup()
     io.KeyMap[ImGuiKey_Space]       = GLFW_KEY_SPACE;
     io.KeyMap[ImGuiKey_Enter]       = GLFW_KEY_ENTER;
     io.KeyMap[ImGuiKey_Escape]      = GLFW_KEY_ESCAPE;
+    io.KeyMap[ImGuiKey_A]           = GLFW_KEY_A;
+    io.KeyMap[ImGuiKey_C]           = GLFW_KEY_C;
+    io.KeyMap[ImGuiKey_V]           = GLFW_KEY_V;
+    io.KeyMap[ImGuiKey_X]           = GLFW_KEY_X;
+    io.KeyMap[ImGuiKey_Y]           = GLFW_KEY_Y;
+    io.KeyMap[ImGuiKey_Z]           = GLFW_KEY_Z;
 
     io.SetClipboardTextFn = &ofGui::setClipboardString;
     io.GetClipboardTextFn = &ofGui::getClipboardString;
+    io.ClipboardUserData  = this;
 
     ofAddListener(ofEvents().keyPressed,       this, &ofGui::onKeyPressed);
     ofAddListener(ofEvents().keyReleased,      this, &ofGui::onKeyReleased);
@@ -223,11 +230,17 @@ void ofGui::onWindowResized(ofResizeEventArgs& window) {
 
 //--------------------------------------------------------------
 const char* ofGui::getClipboardString(void* user_data) {
-    return &ofGetWindowPtr()->getClipboardString()[0];
+    auto gui = static_cast<ofGui*>(user_data);
+    gui->clipboardString = ofGetWindowPtr()->getClipboardString().c_str();
+
+    return gui->clipboardString.c_str();
 }
 
 //--------------------------------------------------------------
 void ofGui::setClipboardString(void* user_data, const char* text) {
+    auto gui = static_cast<ofGui*>(user_data);
+    gui->clipboardString = text;
+
     ofGetWindowPtr()->setClipboardString(text);
 }
 //--------------------------------------------------------------

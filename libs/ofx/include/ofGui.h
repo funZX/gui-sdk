@@ -44,4 +44,6 @@ protected:
 
     ImFontAtlas* imAtlas;
     ofBaseRenderer* glRenderer;
+
+    std::string clipboardString;
 };
