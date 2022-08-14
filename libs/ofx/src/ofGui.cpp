@@ -20,6 +20,7 @@ void ofGui::update()
 {
     ImGuiIO& io = ImGui::GetIO();
     io.MousePos = mouseCursorPos;
+    io.DeltaTime = ofGetWindowPtr()->getDeltaTime();
 
     for (int i = 0; i < 5; i++) {
         io.MouseDown[i] = mousePressed[i];
@@ -105,18 +106,18 @@ void ofGui::setup()
 //--------------------------------------------------------------
 void ofGui::reset()
 {
-    ofRemoveListener(ofEvents().keyPressed, this, &ofGui::onKeyPressed);
-    ofRemoveListener(ofEvents().keyReleased, this, &ofGui::onKeyReleased);
-    ofRemoveListener(ofEvents().charEvent, this, &ofGui::onKeyChar);
+    ofRemoveListener(ofEvents().keyPressed,    this, &ofGui::onKeyPressed);
+    ofRemoveListener(ofEvents().keyReleased,   this, &ofGui::onKeyReleased);
+    ofRemoveListener(ofEvents().charEvent,     this, &ofGui::onKeyChar);
 
     ofRemoveListener(ofEvents().mouseDragged,  this, &ofGui::onMouseDragged);
     ofRemoveListener(ofEvents().mousePressed,  this, &ofGui::onMousePressed);
     ofRemoveListener(ofEvents().mouseReleased, this, &ofGui::onMouseReleased);
     ofRemoveListener(ofEvents().mouseScrolled, this, &ofGui::onMouseScrolled);
 
-    ofRemoveListener(ofEvents().touchDown, this, &ofGui::touchDown);
-    ofRemoveListener(ofEvents().touchUp, this, &ofGui::touchUp);
-    ofRemoveListener(ofEvents().touchMoved, this, &ofGui::touchMoved);
+    ofRemoveListener(ofEvents().touchDown,     this, &ofGui::touchDown);
+    ofRemoveListener(ofEvents().touchUp,       this, &ofGui::touchUp);
+    ofRemoveListener(ofEvents().touchMoved,    this, &ofGui::touchMoved);
 
     ofRemoveListener(ofEvents().windowResized, this, &ofGui::onWindowResized);
 
@@ -142,10 +143,10 @@ void ofGui::onKeyPressed(ofKeyEventArgs& event) {
     
     ImGuiIO& io = ImGui::GetIO();
 
-    io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
-    io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
-    io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
-    io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+    io.KeyCtrl = event.modifiers & OF_KEY_CONTROL;
+    io.KeyShift = event.modifiers & OF_KEY_SHIFT;
+    io.KeyAlt = event.modifiers & OF_KEY_ALT;
+    io.KeySuper = event.modifiers & OF_KEY_SUPER;
 
     io.KeysDown[event.keycode] = true;
 }
@@ -154,10 +155,10 @@ void ofGui::onKeyReleased(ofKeyEventArgs& event)
 {
     ImGuiIO& io = ImGui::GetIO();
 
-    io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
-    io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
-    io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
-    io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+    io.KeyCtrl = event.modifiers & OF_KEY_CONTROL;
+    io.KeyShift = event.modifiers & OF_KEY_SHIFT;
+    io.KeyAlt = event.modifiers & OF_KEY_ALT;
+    io.KeySuper = event.modifiers & OF_KEY_SUPER;
 
     io.KeysDown[event.keycode] = false;
 }

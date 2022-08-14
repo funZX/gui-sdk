@@ -7,9 +7,10 @@
 #include <algorithm>
 #include <sstream>
 
-/// \brief Get the number of frames rendered since the program started.
-/// \returns the number of frames rendered since the program started.
-uint64_t ofGetFrameNum();
+/// \section Precision Time
+/// \brief Get the precision time in microseconds
+/// \returns the microseconds of the precision timer
+uint64_t ofPrecisionTime();
 
 /// \section System Time
 /// \brief Get the seconds after the minute.

@@ -74,7 +74,32 @@ bool ofTime::operator<=(const ofTime & other) const{
 bool ofTime::operator>=(const ofTime & other) const{
 	return seconds >= other.seconds || (seconds == other.seconds && nanoseconds >= other.nanoseconds);
 }
+//--------------------------------------------------
+#ifdef _WIN32
+#	include <windows.h>
+#else
+#	include <sys/time.h>
+#endif
 
+uint64_t ofPrecisionTime() {
+#ifdef _WIN32
+    LARGE_INTEGER ticks;
+    LARGE_INTEGER time;
+
+    QueryPerformanceFrequency(&ticks);
+    QueryPerformanceCounter(&time);
+
+    static LONGLONG old_time = time.QuadPart;
+
+    return (uint64_t)(((time.QuadPart - old_time) * 1000000) / ticks.QuadPart);
+#else
+    struct timeval    tp;
+    gettimeofday(&tp, 0);
+
+    static uint32_t old_tv_sec_2 = tp.tv_sec;
+    return ((tp.tv_sec - old_tv_sec_2) * 1000000 + tp.tv_usec);
+#endif
+}
 //--------------------------------------------------
 int ofGetSeconds(){
 	time_t 	curr;

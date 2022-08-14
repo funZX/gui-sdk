@@ -96,6 +96,7 @@ public:
 	void swapBuffers();
 	void startRender();
 	void finishRender();
+	float getDeltaTime() { return deltaTime; }
 
 	static void listVideoModes();
 	static void listMonitors();
@@ -144,6 +145,14 @@ private:
 
 	int				getCurrentMonitor();
 
+	uint64_t		currentTime = 0;
+	uint64_t		updateTime  = 0;
+	uint64_t		frameTime   = 0;
+	float			deltaTime   = 0.0f;
+	float			deltaHistory[11] = {0};
+
+	void			updateDeltaTime();
+	float			smoothDeltaTime(float deltaTime);
 	ofBaseApp *		ofAppPtr;
 };
 

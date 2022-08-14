@@ -7,6 +7,7 @@
 #include "ofAppRunner.h"
 #include "ofEvents.h"
 #include "ofBaseRenderer.h"
+#include "ofUtils.h"
 
 using namespace std;
 
@@ -269,6 +270,9 @@ void ofAppGLFWWindow::pollEvents(){
 
 //--------------------------------------------
 void ofAppGLFWWindow::draw(){
+	
+	updateDeltaTime();
+
 	glRenderer->startRender();
 
 	events().notifyDraw();
@@ -368,7 +372,54 @@ ImVec2 ofAppGLFWWindow::getScreenSize(){
 	}
 	return ImVec2();
 }
+//------------------------------------------------------------
+float ofAppGLFWWindow::smoothDeltaTime(float deltaTime){
+    float sum = 0.0f;
+    float min1, min2, max1, max2;
+    float dt = 0.0f;
 
+    min1 = min2 = deltaHistory[0];
+    max1 = max2 = 0.0f;
+
+    for (int k = 0; k < 11; k++)
+    {
+        dt = deltaHistory[k];
+
+        if (dt < min1 && dt < min2)
+            min1 = dt;
+        else if (dt < min2)
+            min2 = dt;
+
+        if (dt > max1 && dt > max2)
+            max1 = dt;
+        else if (dt > max2)
+            max2 = dt;
+
+        sum += dt;
+    }
+
+    sum -= (min1 + min2 + max1 + max2);
+    sum *= 0.1428571f;
+
+    dt = 0.5f * (deltaTime + sum);
+
+    for (int k = 0; k < 10; k++)
+		deltaHistory[k] = deltaHistory[k + 1];
+
+	deltaHistory[10] = dt;
+
+    return dt;
+}
+//------------------------------------------------------------
+void ofAppGLFWWindow::updateDeltaTime() {
+
+	uint64_t begin = ofPrecisionTime();
+
+    currentTime = begin;
+    frameTime  = currentTime - updateTime;
+    updateTime = currentTime;
+    deltaTime = smoothDeltaTime(frameTime) / 1000000.0f;
+}
 //------------------------------------------------------------
 int ofAppGLFWWindow::getWidth() const{
 	return currentW * pixelScreenCoordScale;
@@ -558,24 +609,6 @@ void ofAppGLFWWindow::keyboard_cb(GLFWwindow* windowP_, int keycode, int scancod
 	uint32_t codepoint = 0;
 	ofAppGLFWWindow * instance = setCurrent(windowP_);
     
-	ImGuiIO& io = ImGui::GetIO();
-	// Modifiers are not reliable across systems
-    io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
-    io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
-    io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
-    io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
-
-    switch (action)
-    {
-    case GLFW_PRESS:
-        io.KeysDown[key] = true;
-        break;
-
-    case GLFW_RELEASE:
-        io.KeysDown[key] = false;
-        break;
-    }
-
     switch (keycode) {
     case GLFW_KEY_ESCAPE:
         key = OF_KEY_ESC;
