@@ -21,26 +21,26 @@ class ofBaseApp {
 		virtual void draw(ofEventArgs & args) = 0;
 		virtual void exit(ofEventArgs & args) = 0;
 
-		virtual void windowResized(ofResizeEventArgs & resize) = 0;
-		virtual void fileDragged(ofDragInfo& drag) = 0;
+		virtual void windowResized(ofResizeEventArgs & resize){}
+		virtual void fileDragged(ofDragInfo& drag) {}
 
-		virtual void keyPressed( ofKeyEventArgs & key ) = 0;
-		virtual void keyReleased( ofKeyEventArgs & key ) = 0;
+		virtual void keyPressed( ofKeyEventArgs & key ) {}
+		virtual void keyReleased( ofKeyEventArgs & key ) {}
 
-		virtual void mouseMoved( ofMouseEventArgs & mouse ) = 0;
-		virtual void mouseDragged( ofMouseEventArgs & mouse ) = 0;
-		virtual void mousePressed( ofMouseEventArgs & mouse ) = 0;
-		virtual void mouseReleased( ofMouseEventArgs & mouse ) = 0;
-		virtual void mouseScrolled( ofMouseEventArgs & mouse ) = 0;
-		virtual void mouseEntered( ofMouseEventArgs & mouse ) = 0;
-		virtual void mouseExited( ofMouseEventArgs & mouse ) = 0;
-		virtual void messageReceived( ofMessage & message ) = 0;
+		virtual void mouseMoved( ofMouseEventArgs & mouse ) {}
+		virtual void mouseDragged( ofMouseEventArgs & mouse ) {}
+		virtual void mousePressed( ofMouseEventArgs & mouse ) {}
+		virtual void mouseReleased( ofMouseEventArgs & mouse ) {}
+		virtual void mouseScrolled( ofMouseEventArgs & mouse ) {}
+		virtual void mouseEntered( ofMouseEventArgs & mouse ) {}
+		virtual void mouseExited( ofMouseEventArgs & mouse ) {}
+		virtual void messageReceived( ofMessage & message ) {}
 
-		virtual void touchDown(ofTouchEventArgs & touch) = 0;
-		virtual void touchMoved(ofTouchEventArgs & touch) = 0;
-		virtual void touchUp(ofTouchEventArgs & touch) = 0;
-		virtual void touchDoubleTap(ofTouchEventArgs & touch) = 0;
-		virtual void touchCancelled(ofTouchEventArgs & touch) = 0;
+		virtual void touchDown(ofTouchEventArgs & touch) {}
+		virtual void touchMoved(ofTouchEventArgs & touch) {}
+		virtual void touchUp(ofTouchEventArgs & touch) {}
+		virtual void touchDoubleTap(ofTouchEventArgs & touch) {}
+		virtual void touchCancelled(ofTouchEventArgs & touch) {}
 };
 
 
