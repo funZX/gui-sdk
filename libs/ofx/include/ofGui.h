@@ -22,8 +22,11 @@ public:
     virtual void touchDown(ofTouchEventArgs& touch);
     virtual void touchUp(ofTouchEventArgs& touch);
     virtual void touchMoved(ofTouchEventArgs& touch);
+    
     virtual void onKeyPressed(ofKeyEventArgs& event);
     virtual void onKeyReleased(ofKeyEventArgs& event);
+    virtual void onKeyChar(uint32_t& keyCode);
+
     virtual void onWindowResized(ofResizeEventArgs& window);
 
     virtual ImVec2 getMousePos();

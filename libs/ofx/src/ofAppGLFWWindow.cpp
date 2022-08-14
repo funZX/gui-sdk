@@ -39,6 +39,14 @@ ofAppGLFWWindow::~ofAppGLFWWindow(){
 void ofAppGLFWWindow::close(){
 	if(windowP){
 
+        glfwDestroyCursor(mouseCursors[ImGuiMouseCursor_Arrow]);
+		glfwDestroyCursor(mouseCursors[ImGuiMouseCursor_TextInput]);
+		glfwDestroyCursor(mouseCursors[ImGuiMouseCursor_ResizeAll]);
+		glfwDestroyCursor(mouseCursors[ImGuiMouseCursor_ResizeNS]);
+		glfwDestroyCursor(mouseCursors[ImGuiMouseCursor_ResizeEW]);
+		glfwDestroyCursor(mouseCursors[ImGuiMouseCursor_ResizeNESW]);
+		glfwDestroyCursor(mouseCursors[ImGuiMouseCursor_ResizeNWSE]);
+		glfwDestroyCursor(mouseCursors[ImGuiMouseCursor_Hand]);
 
 		glfwSetMouseButtonCallback( windowP, nullptr );
 		glfwSetCursorPosCallback( windowP, nullptr );
@@ -97,6 +105,16 @@ void ofAppGLFWWindow::setup(const ofGLFWWindowSettings & _settings){
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, settings.glesVersion);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
+
+    mouseCursors[ImGuiMouseCursor_Arrow] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+    mouseCursors[ImGuiMouseCursor_TextInput] = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
+    mouseCursors[ImGuiMouseCursor_ResizeAll] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);   // FIXME: GLFW doesn't have this.
+    mouseCursors[ImGuiMouseCursor_ResizeNS] = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
+    mouseCursors[ImGuiMouseCursor_ResizeEW] = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
+    mouseCursors[ImGuiMouseCursor_ResizeNESW] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);  // FIXME: GLFW doesn't have this.
+    mouseCursors[ImGuiMouseCursor_ResizeNWSE] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);  // FIXME: GLFW doesn't have this.
+    mouseCursors[ImGuiMouseCursor_Hand] = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
+
 	glRenderer = std::make_shared<ofBaseRenderer>(this);
 
 	GLFWwindow * sharedContext = nullptr;
@@ -192,7 +210,7 @@ void ofAppGLFWWindow::setup(const ofGLFWWindowSettings & _settings){
 	gladLoadGL(glfwGetProcAddress);
 	glRenderer->setup();
 
-	setVerticalSync(true);
+	setVerticalSync(false);
 	glfwSetMouseButtonCallback(windowP, mouse_cb);
 	glfwSetCursorPosCallback(windowP, motion_cb);
 	glfwSetCursorEnterCallback(windowP, entry_cb);
@@ -219,6 +237,18 @@ shared_ptr<ofBaseRenderer> & ofAppGLFWWindow::renderer(){
 
 //--------------------------------------------
 void ofAppGLFWWindow::update(){
+    
+	ImGuiIO& io = ImGui::GetIO();
+    ImGuiMouseCursor cursor = ImGui::GetMouseCursor();
+    if (cursor == ImGuiMouseCursor_None || io.MouseDrawCursor) {
+        glfwSetInputMode(windowP, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+    }
+    else {
+        glfwSetCursor(windowP, mouseCursors[cursor] ?
+            mouseCursors[cursor] : mouseCursors[ImGuiMouseCursor_Arrow]);
+        glfwSetInputMode(windowP, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
+
 	events().notifyUpdate();
 
 	//show the window right before the first draw call.
@@ -527,167 +557,186 @@ void ofAppGLFWWindow::keyboard_cb(GLFWwindow* windowP_, int keycode, int scancod
 	int key = 0;
 	uint32_t codepoint = 0;
 	ofAppGLFWWindow * instance = setCurrent(windowP_);
-	switch (keycode) {
-		case GLFW_KEY_ESCAPE:
-			key = OF_KEY_ESC;
-		    break;
-		case GLFW_KEY_F1:
-			key = OF_KEY_F1;
-		    break;
-		case GLFW_KEY_F2:
-			key = OF_KEY_F2;
-		    break;
-		case GLFW_KEY_F3:
-			key = OF_KEY_F3;
-		    break;
-		case GLFW_KEY_F4:
-			key = OF_KEY_F4;
-		    break;
-		case GLFW_KEY_F5:
-			key = OF_KEY_F5;
-		    break;
-		case GLFW_KEY_F6:
-			key = OF_KEY_F6;
-		    break;
-		case GLFW_KEY_F7:
-			key = OF_KEY_F7;
-		    break;
-		case GLFW_KEY_F8:
-			key = OF_KEY_F8;
-		    break;
-		case GLFW_KEY_F9:
-			key = OF_KEY_F9;
-		    break;
-		case GLFW_KEY_F10:
-			key = OF_KEY_F10;
-		    break;
-		case GLFW_KEY_F11:
-			key = OF_KEY_F11;
-		    break;
-		case GLFW_KEY_F12:
-			key = OF_KEY_F12;
-		    break;
-		case GLFW_KEY_LEFT:
-			key = OF_KEY_LEFT;
-		    break;
-		case GLFW_KEY_RIGHT:
-			key = OF_KEY_RIGHT;
-		    break;
-		case GLFW_KEY_UP:
-			key = OF_KEY_UP;
-		    break;
-		case GLFW_KEY_DOWN:
-			key = OF_KEY_DOWN;
-		    break;
-		case GLFW_KEY_PAGE_UP:
-			key = OF_KEY_PAGE_UP;
-		    break;
-		case GLFW_KEY_PAGE_DOWN:
-			key = OF_KEY_PAGE_DOWN;
-		    break;
-		case GLFW_KEY_HOME:
-			key = OF_KEY_HOME;
-		    break;
-		case GLFW_KEY_END:
-			key = OF_KEY_END;
-		    break;
-		case GLFW_KEY_INSERT:
-			key = OF_KEY_INSERT;
-		    break;
-		case GLFW_KEY_LEFT_SHIFT:
-			key = OF_KEY_LEFT_SHIFT;
-		    break;
-		case GLFW_KEY_LEFT_CONTROL:
-			key = OF_KEY_LEFT_CONTROL;
-		    break;
-		case GLFW_KEY_LEFT_ALT:
-			key = OF_KEY_LEFT_ALT;
-		    break;
-		case GLFW_KEY_LEFT_SUPER:
-			key = OF_KEY_LEFT_SUPER;
-		    break;
-		case GLFW_KEY_RIGHT_SHIFT:
-			key = OF_KEY_RIGHT_SHIFT;
-		    break;
-		case GLFW_KEY_RIGHT_CONTROL:
-			key = OF_KEY_RIGHT_CONTROL;
-		    break;
-		case GLFW_KEY_RIGHT_ALT:
-			key = OF_KEY_RIGHT_ALT;
-		    break;
-		case GLFW_KEY_RIGHT_SUPER:
-			key = OF_KEY_RIGHT_SUPER;
-		    break;
-		case GLFW_KEY_BACKSPACE:
-			key = OF_KEY_BACKSPACE;
-		    break;
-		case GLFW_KEY_DELETE:
-			key = OF_KEY_DEL;
-		    break;
-		case GLFW_KEY_ENTER:
-			key = OF_KEY_RETURN;
-			codepoint = '\n';
-		    break;
-		case GLFW_KEY_KP_ENTER:
-			key = OF_KEY_RETURN;
-			codepoint = '\n';
-		    break;
-		case GLFW_KEY_TAB:
-			key = OF_KEY_TAB;
-			codepoint = '\t';
-		    break;
-		case GLFW_KEY_KP_0:
-			key = codepoint = '0';
-		    break;
-		case GLFW_KEY_KP_1:
-			key = codepoint = '1';
-		    break;
-		case GLFW_KEY_KP_2:
-			key = codepoint = '2';
-		    break;
-		case GLFW_KEY_KP_3:
-			key = codepoint = '3';
-		    break;
-		case GLFW_KEY_KP_4:
-			key = codepoint = '4';
-		    break;
-		case GLFW_KEY_KP_5:
-			key = codepoint = '5';
-		    break;
-		case GLFW_KEY_KP_6:
-			key = codepoint = '6';
-		    break;
-		case GLFW_KEY_KP_7:
-			key = codepoint = '7';
-		    break;
-		case GLFW_KEY_KP_8:
-			key = codepoint = '8';
-		    break;
-		case GLFW_KEY_KP_9:
-			key = codepoint = '9';
-		    break;
-		case GLFW_KEY_KP_DIVIDE:
-			key = codepoint = '/';
-		    break;
-		case GLFW_KEY_KP_MULTIPLY:
-			key = codepoint = '*';
-		    break;
-		case GLFW_KEY_KP_SUBTRACT:
-			key = codepoint = '-';
-		    break;
-		case GLFW_KEY_KP_ADD:
-			key = codepoint = '+';
-		    break;
-		case GLFW_KEY_KP_DECIMAL:
-			key = codepoint = '.';
-		    break;
-		case GLFW_KEY_KP_EQUAL:
-			key = codepoint = '=';
-		    break;
-		default:
-			key = codepoint;
-		    break;
-	}
+    
+	ImGuiIO& io = ImGui::GetIO();
+	// Modifiers are not reliable across systems
+    io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+    io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+    io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+    io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+
+    switch (action)
+    {
+    case GLFW_PRESS:
+        io.KeysDown[key] = true;
+        break;
+
+    case GLFW_RELEASE:
+        io.KeysDown[key] = false;
+        break;
+    }
+
+    switch (keycode) {
+    case GLFW_KEY_ESCAPE:
+        key = OF_KEY_ESC;
+        break;
+    case GLFW_KEY_F1:
+        key = OF_KEY_F1;
+        break;
+    case GLFW_KEY_F2:
+        key = OF_KEY_F2;
+        break;
+    case GLFW_KEY_F3:
+        key = OF_KEY_F3;
+        break;
+    case GLFW_KEY_F4:
+        key = OF_KEY_F4;
+        break;
+    case GLFW_KEY_F5:
+        key = OF_KEY_F5;
+        break;
+    case GLFW_KEY_F6:
+        key = OF_KEY_F6;
+        break;
+    case GLFW_KEY_F7:
+        key = OF_KEY_F7;
+        break;
+    case GLFW_KEY_F8:
+        key = OF_KEY_F8;
+        break;
+    case GLFW_KEY_F9:
+        key = OF_KEY_F9;
+        break;
+    case GLFW_KEY_F10:
+        key = OF_KEY_F10;
+        break;
+    case GLFW_KEY_F11:
+        key = OF_KEY_F11;
+        break;
+    case GLFW_KEY_F12:
+        key = OF_KEY_F12;
+        break;
+    case GLFW_KEY_LEFT:
+        key = OF_KEY_LEFT;
+        break;
+    case GLFW_KEY_RIGHT:
+        key = OF_KEY_RIGHT;
+        break;
+    case GLFW_KEY_UP:
+        key = OF_KEY_UP;
+        break;
+    case GLFW_KEY_DOWN:
+        key = OF_KEY_DOWN;
+        break;
+    case GLFW_KEY_PAGE_UP:
+        key = OF_KEY_PAGE_UP;
+        break;
+    case GLFW_KEY_PAGE_DOWN:
+        key = OF_KEY_PAGE_DOWN;
+        break;
+    case GLFW_KEY_HOME:
+        key = OF_KEY_HOME;
+        break;
+    case GLFW_KEY_END:
+        key = OF_KEY_END;
+        break;
+    case GLFW_KEY_INSERT:
+        key = OF_KEY_INSERT;
+        break;
+    case GLFW_KEY_LEFT_SHIFT:
+        key = OF_KEY_LEFT_SHIFT;
+        break;
+    case GLFW_KEY_LEFT_CONTROL:
+        key = OF_KEY_LEFT_CONTROL;
+        break;
+    case GLFW_KEY_LEFT_ALT:
+        key = OF_KEY_LEFT_ALT;
+        break;
+    case GLFW_KEY_LEFT_SUPER:
+        key = OF_KEY_LEFT_SUPER;
+        break;
+    case GLFW_KEY_RIGHT_SHIFT:
+        key = OF_KEY_RIGHT_SHIFT;
+        break;
+    case GLFW_KEY_RIGHT_CONTROL:
+        key = OF_KEY_RIGHT_CONTROL;
+        break;
+    case GLFW_KEY_RIGHT_ALT:
+        key = OF_KEY_RIGHT_ALT;
+        break;
+    case GLFW_KEY_RIGHT_SUPER:
+        key = OF_KEY_RIGHT_SUPER;
+        break;
+    case GLFW_KEY_BACKSPACE:
+        key = OF_KEY_BACKSPACE;
+        break;
+    case GLFW_KEY_DELETE:
+        key = OF_KEY_DEL;
+        break;
+    case GLFW_KEY_ENTER:
+        key = OF_KEY_RETURN;
+        codepoint = '\n';
+        break;
+    case GLFW_KEY_KP_ENTER:
+        key = OF_KEY_RETURN;
+        codepoint = '\n';
+        break;
+    case GLFW_KEY_TAB:
+        key = OF_KEY_TAB;
+        codepoint = '\t';
+        break;
+    case GLFW_KEY_KP_0:
+        key = codepoint = '0';
+        break;
+    case GLFW_KEY_KP_1:
+        key = codepoint = '1';
+        break;
+    case GLFW_KEY_KP_2:
+        key = codepoint = '2';
+        break;
+    case GLFW_KEY_KP_3:
+        key = codepoint = '3';
+        break;
+    case GLFW_KEY_KP_4:
+        key = codepoint = '4';
+        break;
+    case GLFW_KEY_KP_5:
+        key = codepoint = '5';
+        break;
+    case GLFW_KEY_KP_6:
+        key = codepoint = '6';
+        break;
+    case GLFW_KEY_KP_7:
+        key = codepoint = '7';
+        break;
+    case GLFW_KEY_KP_8:
+        key = codepoint = '8';
+        break;
+    case GLFW_KEY_KP_9:
+        key = codepoint = '9';
+        break;
+    case GLFW_KEY_KP_DIVIDE:
+        key = codepoint = '/';
+        break;
+    case GLFW_KEY_KP_MULTIPLY:
+        key = codepoint = '*';
+        break;
+    case GLFW_KEY_KP_SUBTRACT:
+        key = codepoint = '-';
+        break;
+    case GLFW_KEY_KP_ADD:
+        key = codepoint = '+';
+        break;
+    case GLFW_KEY_KP_DECIMAL:
+        key = codepoint = '.';
+        break;
+    case GLFW_KEY_KP_EQUAL:
+        key = codepoint = '=';
+        break;
+    default:
+        key = codepoint;
+        break;
+    }
 
 	int modifiers = glfwtToOFModifiers(mods);
 

@@ -45,7 +45,7 @@ void ofGui::setup()
     ImFontConfig fontConfig;
 
     fontConfig.FontDataOwnedByAtlas = false;
-    fontConfig.SizePixels = 13;
+    fontConfig.SizePixels = 15;
     fontConfig.FontDataSize = sizeof(ttf_font);
 
     imAtlas->AddFontFromMemoryTTF((void*)ttf_font, fontConfig.FontDataSize, fontConfig.SizePixels, &fontConfig);
@@ -79,26 +79,38 @@ void ofGui::setup()
     io.SetClipboardTextFn = &ofGui::setClipboardString;
     io.GetClipboardTextFn = &ofGui::getClipboardString;
 
-    ofAddListener(ofEvents().keyReleased, this, &ofGui::onKeyReleased);
-
     ofAddListener(ofEvents().keyPressed,       this, &ofGui::onKeyPressed);
+    ofAddListener(ofEvents().keyReleased,      this, &ofGui::onKeyReleased);
+    ofAddListener(ofEvents().charEvent,        this, &ofGui::onKeyChar);
+
     ofAddListener(ofEvents().mouseMoved,       this, &ofGui::onMouseMoved);
     ofAddListener(ofEvents().mouseDragged,     this, &ofGui::onMouseDragged);
     ofAddListener(ofEvents().mousePressed,     this, &ofGui::onMousePressed);
     ofAddListener(ofEvents().mouseReleased,    this, &ofGui::onMouseReleased);
     ofAddListener(ofEvents().mouseScrolled,    this, &ofGui::onMouseScrolled);
+
+    ofAddListener(ofEvents().touchDown,        this, &ofGui::touchDown);
+    ofAddListener(ofEvents().touchUp,          this, &ofGui::touchUp);
+    ofAddListener(ofEvents().touchMoved,       this, &ofGui::touchMoved);
+
     ofAddListener(ofEvents().windowResized,    this, &ofGui::onWindowResized);
 }
 //--------------------------------------------------------------
 void ofGui::reset()
 {
+    ofRemoveListener(ofEvents().keyPressed, this, &ofGui::onKeyPressed);
     ofRemoveListener(ofEvents().keyReleased, this, &ofGui::onKeyReleased);
+    ofRemoveListener(ofEvents().charEvent, this, &ofGui::onKeyChar);
 
-    ofRemoveListener(ofEvents().keyPressed,    this, &ofGui::onKeyPressed);
     ofRemoveListener(ofEvents().mouseDragged,  this, &ofGui::onMouseDragged);
     ofRemoveListener(ofEvents().mousePressed,  this, &ofGui::onMousePressed);
     ofRemoveListener(ofEvents().mouseReleased, this, &ofGui::onMouseReleased);
     ofRemoveListener(ofEvents().mouseScrolled, this, &ofGui::onMouseScrolled);
+
+    ofRemoveListener(ofEvents().touchDown, this, &ofGui::touchDown);
+    ofRemoveListener(ofEvents().touchUp, this, &ofGui::touchUp);
+    ofRemoveListener(ofEvents().touchMoved, this, &ofGui::touchMoved);
+
     ofRemoveListener(ofEvents().windowResized, this, &ofGui::onWindowResized);
 
     glRenderer->deleteTexture((unsigned)imAtlas->TexID);
@@ -120,11 +132,34 @@ void ofGui::setMousePos(float x, float y) {
 
 //--------------------------------------------------------------
 void ofGui::onKeyPressed(ofKeyEventArgs& event) {
-    int key = event.keycode;
+    
     ImGuiIO& io = ImGui::GetIO();
-    io.KeysDown[key] = true;
-}
 
+    io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+    io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+    io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+    io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+
+    io.KeysDown[event.keycode] = true;
+}
+//--------------------------------------------------------------
+void ofGui::onKeyReleased(ofKeyEventArgs& event)
+{
+    ImGuiIO& io = ImGui::GetIO();
+
+    io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+    io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+    io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+    io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+
+    io.KeysDown[event.keycode] = false;
+}
+//--------------------------------------------------------------
+void ofGui::onKeyChar(uint32_t& keyCode)
+{
+    ImGuiIO& io = ImGui::GetIO();
+    io.AddInputCharacter(keyCode);
+}
 //--------------------------------------------------------------
 void ofGui::onMousePressed(ofMouseEventArgs& event) {
     setMousePos(event.x, event.y);
@@ -159,7 +194,8 @@ void ofGui::onMouseDragged(ofMouseEventArgs& event) {
 //--------------------------------------------------------------
 void ofGui::onMouseScrolled(ofMouseEventArgs& event) {
     ImGuiIO& io = ImGui::GetIO();
-    io.MouseWheel = event.scrollY;
+    io.MouseWheelH += event.scrollX;
+    io.MouseWheel += event.scrollY;
 }
 
 //--------------------------------------------------------------
@@ -178,14 +214,6 @@ void ofGui::touchUp(ofTouchEventArgs& touch) {
 void ofGui::touchMoved(ofTouchEventArgs& touch) {
     setMousePos(touch.x, touch.y);
     mouseReleased[0] = false;
-}
-//--------------------------------------------------------------
-void ofGui::onKeyReleased(ofKeyEventArgs& event)
-{
-    int key = event.keycode;
-    ImGuiIO& io = ImGui::GetIO();
-    io.KeysDown[key] = false;
-    io.AddInputCharacter((unsigned short)event.codepoint);
 }
 //--------------------------------------------------------------
 void ofGui::onWindowResized(ofResizeEventArgs& window) {

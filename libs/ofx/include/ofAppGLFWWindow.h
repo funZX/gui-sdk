@@ -140,6 +140,7 @@ private:
 	bool			needsResizeCheck = false; /// Just for RPI at this point
 
 	GLFWwindow* 	windowP;
+    GLFWcursor*		mouseCursors[ImGuiMouseCursor_COUNT] = {};
 
 	int				getCurrentMonitor();
 
