@@ -22,10 +22,8 @@ void ofGui::update()
     io.MousePos = mouseCursorPos;
     io.DeltaTime = ofGetWindowPtr()->getDeltaTime();
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 5; i++)
         io.MouseDown[i] = mousePressed[i];
-        mousePressed[i] = !mouseReleased[i];
-    }
 
     ImGui::NewFrame();
 }
@@ -180,7 +178,10 @@ void ofGui::onMousePressed(ofMouseEventArgs& event) {
 //--------------------------------------------------------------
 void ofGui::onMouseReleased(ofMouseEventArgs& event) {
     setMousePos(event.x, event.y);
-    mouseReleased[event.button] = true;
+    if (event.button >= 0 && event.button < 5) {
+        mousePressed[event.button] = false;
+        mouseReleased[event.button] = true;
+    }
 }
 
 //--------------------------------------------------------------
@@ -196,7 +197,6 @@ void ofGui::onMouseMoved(ofMouseEventArgs& event) {
 //--------------------------------------------------------------
 void ofGui::onMouseDragged(ofMouseEventArgs& event) {
     setMousePos(event.x, event.y);
-    mouseReleased[event.button] = false;
 }
 
 //--------------------------------------------------------------

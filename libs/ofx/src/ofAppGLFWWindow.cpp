@@ -260,7 +260,6 @@ void ofAppGLFWWindow::update(){
 			setFullscreen(true);
 		}
 	}
-
 }
 
 //--------------------------------------------
