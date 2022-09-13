@@ -372,52 +372,14 @@ ImVec2 ofAppGLFWWindow::getScreenSize(){
 	return ImVec2();
 }
 //------------------------------------------------------------
-float ofAppGLFWWindow::smoothDeltaTime(float deltaTime){
-    float sum = 0.0f;
-    float min1, min2, max1, max2;
-    float dt = 0.0f;
-
-    min1 = min2 = deltaHistory[0];
-    max1 = max2 = 0.0f;
-
-    for (int k = 0; k < 11; k++)
-    {
-        dt = deltaHistory[k];
-
-        if (dt < min1 && dt < min2)
-            min1 = dt;
-        else if (dt < min2)
-            min2 = dt;
-
-        if (dt > max1 && dt > max2)
-            max1 = dt;
-        else if (dt > max2)
-            max2 = dt;
-
-        sum += dt;
-    }
-
-    sum -= (min1 + min2 + max1 + max2);
-    sum *= 0.1428571f;
-
-    dt = 0.5f * (deltaTime + sum);
-
-    for (int k = 0; k < 10; k++)
-		deltaHistory[k] = deltaHistory[k + 1];
-
-	deltaHistory[10] = dt;
-
-    return dt;
-}
-//------------------------------------------------------------
 void ofAppGLFWWindow::updateDeltaTime() {
 
 	uint64_t begin = ofPrecisionTime();
 
     currentTime = begin;
-    frameTime  = currentTime - updateTime;
+    deltaTime  = (currentTime - updateTime) / 1000000.0f;
+	deltaTime = ofClamp(deltaTime, 0.0001f, 0.0016f);
     updateTime = currentTime;
-    deltaTime = smoothDeltaTime(frameTime) / 1000000.0f;
 }
 //------------------------------------------------------------
 int ofAppGLFWWindow::getWidth() const{

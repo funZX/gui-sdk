@@ -59,7 +59,7 @@ public:
 	virtual void swapBuffers() {}
 	virtual void startRender() {}
 	virtual void finishRender() {}
-	virtual float getDeltaTime() { return 1000.0f / 60.0f; }
+	virtual float getDeltaTime() { return 0.0016f; }
     virtual void * getWindowContext(){return nullptr;};
 };
 

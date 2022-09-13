@@ -147,12 +147,9 @@ private:
 
 	uint64_t		currentTime = 0;
 	uint64_t		updateTime  = 0;
-	uint64_t		frameTime   = 0;
-	float			deltaTime   = 0.0001f;
-	float			deltaHistory[11] = {0};
+	float			deltaTime   = 0.0016f;
 
 	void			updateDeltaTime();
-	float			smoothDeltaTime(float deltaTime);
 	ofBaseApp *		ofAppPtr;
 };
 
