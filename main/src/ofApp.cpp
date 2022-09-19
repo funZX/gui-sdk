@@ -2,6 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(ofEventArgs& args){
+    ImNodes::EditorInitialize();
 }
 //--------------------------------------------------------------
 void ofApp::update(ofEventArgs& args) {
@@ -23,10 +24,11 @@ void ofApp::draw(ofEventArgs & args) {
     ImGui::PopStyleVar(2);
     ImGui::End();
 
-
+    ImNodes::EditorShow();
     ImPlot::ShowDemoWindow();
     ImGui::ShowDemoWindow();
 }
 //--------------------------------------------------------------
 void ofApp::exit(ofEventArgs& args) {
+    ImNodes::EditorShutdown();
 }

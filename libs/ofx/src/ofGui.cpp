@@ -50,6 +50,7 @@ void ofGui::setup()
     imAtlas->AddFontFromMemoryTTF((void*)ttf_font, fontConfig.FontDataSize, fontConfig.SizePixels, &fontConfig);
     ImGui::CreateContext(imAtlas);
     ImPlot::CreateContext();
+    ImNodes::CreateContext();
     setStyle();
 
     int w = 0, h = 0;
@@ -81,6 +82,7 @@ void ofGui::setup()
     io.KeyMap[ImGuiKey_X]           = GLFW_KEY_X;
     io.KeyMap[ImGuiKey_Y]           = GLFW_KEY_Y;
     io.KeyMap[ImGuiKey_Z]           = GLFW_KEY_Z;
+    io.KeyMap[ImGuiKey_LeftCtrl]    = GLFW_KEY_LEFT_CONTROL;
 
     io.SetClipboardTextFn = &ofGui::setClipboardString;
     io.GetClipboardTextFn = &ofGui::getClipboardString;
@@ -123,6 +125,7 @@ void ofGui::reset()
 
     glRenderer->deleteTexture((unsigned)imAtlas->TexID);
 
+    ImNodes::DestroyContext();
     ImPlot::DestroyContext();
     ImGui::DestroyContext();
     delete imAtlas;
