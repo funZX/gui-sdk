@@ -84,6 +84,7 @@ void ofGui::setup()
     io.SetClipboardTextFn = &ofGui::setClipboardString;
     io.GetClipboardTextFn = &ofGui::getClipboardString;
     io.ClipboardUserData  = this;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
     ofAddListener(ofEvents().keyPressed,       this, &ofGui::onKeyPressed);
     ofAddListener(ofEvents().keyReleased,      this, &ofGui::onKeyReleased);
