@@ -15,6 +15,7 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include <imgui.h>
+#include <implot.h>
 //------------------------------------------------ make_unique
 // This is a helper method for make unique on platforms that support C++11, but not C++14.
 #if !defined(NO_OF_MAKE_UNIQUE) && (defined(_MSC_VER) && _MSC_VER < 1800) || (!defined(_MSC_VER) && __cplusplus <= 201103L)

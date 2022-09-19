@@ -24,7 +24,7 @@ void ofApp::draw(ofEventArgs & args) {
     ImGui::End();
 
 
-
+    ImPlot::ShowDemoWindow();
     ImGui::ShowDemoWindow();
 }
 //--------------------------------------------------------------

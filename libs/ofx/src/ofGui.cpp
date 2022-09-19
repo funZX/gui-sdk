@@ -49,6 +49,7 @@ void ofGui::setup()
 
     imAtlas->AddFontFromMemoryTTF((void*)ttf_font, fontConfig.FontDataSize, fontConfig.SizePixels, &fontConfig);
     ImGui::CreateContext(imAtlas);
+    ImPlot::CreateContext();
     setStyle();
 
     int w = 0, h = 0;
@@ -122,6 +123,7 @@ void ofGui::reset()
 
     glRenderer->deleteTexture((unsigned)imAtlas->TexID);
 
+    ImPlot::DestroyContext();
     ImGui::DestroyContext();
     delete imAtlas;
 }
